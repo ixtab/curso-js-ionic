@@ -7,6 +7,8 @@
             function longitud() {
                 var texto = document.getElementById("nombre").value;
                 alert(texto.length);
+                var n_mayus = texto.toUpperCase();
+                console.log ("n_mayus: " + n_mayus);
             }
         </script>
     </head>
@@ -14,7 +16,7 @@
     <body>
         <form>
             <p>Pon tu nombre: <input type="text" id="nombre" name="nombre"></p>
-            <button onclick="longitud()">Pulsa aquí</button>    
+            <button onclick="longitud();">Pulsa aquí</button>    
         </form>
     </body>
 

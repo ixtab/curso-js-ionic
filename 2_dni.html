@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+ <html lang="es"> 
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Calcula DNI</title>
+        <script>
+            const LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
+            function letra() {
+                var numero = document.getElementById("num").value;
+                if (isNaN(numero) || numero <= 0){
+                    alert('Número no valido');
+                    document.getElementById("num").value = "";
+                    document.getElementById('num').focus()
+                }
+                else {
+                    var num_int = parseInt(numero);
+                    var resto = num_int % 23;
+                    var letra_dni = LETRAS_DNI[resto];
+                    document.getElementById("letra").innerHTML = "La letra del DNI del número: " + num_int + " es " + letra_dni;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <p>Numero DNI: <input type="text" id="num"></p>
+        <button onclick="letra();">Calcula letra</button>  
+        <p id="letra"></p>
+    </body>
+ </html>
