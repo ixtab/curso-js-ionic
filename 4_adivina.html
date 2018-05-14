@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+ <html lang="en"> 
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Adivina el número</title>
+        <script>
+            var vez = 0;
+            var num_alea_entero = 0;
+            var num_usu = 0;
+            
+            function aleatorio(){
+                num_alea = Math.random() * 10;
+                num_alea_entero = Math.ceil(num_alea)
+                console.log("num_ale_entero: " + num_alea_entero);
+                return num_alea_entero;
+            } 
+
+            function pideNumero(){
+                num_usu = prompt ("Pon un número del 1 al 10");
+                console.log("num_usu: " + num_usu);
+                return num_usu;
+            }
+
+            function jugar(){
+                do {
+                    pideNumero();
+                    if (num_usu == num_alea_entero){
+                        alert("¡¡¡HAS GANADO!!!");
+                        vez = 6;
+                    }
+                    if (num_usu > num_alea_entero){
+                        alert("El número que has puesto es mayor");
+                        vez++;
+                    }
+                    if (num_usu < num_alea_entero){
+                        alert("El número que has puesto es menor");
+                        vez++;
+                        
+                    }
+                } while (vez < 5)
+                
+                if (vez < 6){
+                    alert ("Has fallado. :(");
+                }
+            }
+            
+            function reset(){
+                vez = 0;
+            }
+
+            window.onload = aleatorio(), jugar();
+        </script>
+    </head>
+
+    <body>
+        <button onclick="reset();aleatorio();jugar()">Jugar</button>
+    </body>
+
+    </html>
