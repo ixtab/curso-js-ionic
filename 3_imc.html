@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+ <html lang="es"> 
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Calculo IMC</title>
+        <script>
+            function calculaImc(){
+                var peso = document.getElementById("peso").value;
+                var altura = document.getElementById("altura").value;
+                var imc = peso/Math.pow(altura, 2);
+                document.getElementById("numerico").value = imc.toFixed(2);
+                textoImc(imc);
+            }
+            function textoImc(imc){
+                if (imc < 16){
+                    document.getElementById("resuNomi").value = "Estás desnutrido";
+                    document.getElementById("imagen").src = "https://www.portaleducativo.net/biblioteca/esqueleto_en%20movimiento.jpg";
+                }
+                else if (imc > 16 && imc < 18){
+                    document.getElementById("resuNomi").value = "Estás delgado";
+                    document.getElementById("imagen").src = "http://i.espectaculos.televisa.com/2017/10/delgado.jpg";
+                }
+                else if (imc > 18 && imc < 25){
+                    document.getElementById("resuNomi").value = "Estás normal";
+                    document.getElementById("imagen").src = "https://st2.depositphotos.com/2451847/6843/i/950/depositphotos_68430311-stock-photo-stomach-of-children-with-normal.jpg";
+                }
+                else if (imc > 25 && imc < 31){
+                    document.getElementById("resuNomi").value = "Tienes sobrepeso";
+                    document.getElementById("imagen").src = "https://marcianosmx.com/wp-content/uploads/2011/10/de_musculoso_a_gordo_antes_despues_640_56.jpg";
+                }
+                else {
+                    document.getElementById("resuNomi").value = "Estás obeso";
+                    document.getElementById("imagen").src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Jabba_the_Hutt_%2810585038414%29.jpg/1200px-Jabba_the_Hutt_%2810585038414%29.jpg";
+                }
+            }
+
+        </script>
+    </head>
+    <body>
+        <label for ="peso">Introduce tu peso:
+        <input type="text" id="peso"></p>
+        <label for ="altura">Introduce tu altura:
+        <input type="text" id="altura"></p>
+        <button onclick="calculaImc();">Calcula IMC</button>
+        <br>
+        <br>
+        <input type="text" id = "resuNomi">
+        <br>
+        <input type="text" id="numerico">
+        <br>
+        <br>
+        <img id= "imagen" src="" alt="" width="400px">
+    </body>
+ </html>
+
