@@ -1,0 +1,78 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="estilo.css">
+  <script type="text/javascript">
+
+    const IMAGEN_1 = "desnutrido.jpeg";
+    const IMAGEN_2 = "obeso.jpeg";
+
+    var tocado = false;
+    var imagen_visible = "";
+
+    onload = inicia;
+
+    function inicia() {
+      var lista_divs = document.querySelectorAll("div");
+      for (var i = 0; i < lista_divs.length; i++) {
+        lista_divs[i].addEventListener('click', imagenTocada);
+        img = lista_divs[i].firstElementChild; // Selecciona la imagen dentro del div.
+        img.style.visibility = 'hidden'; // oculta imagen
+      }
+    }
+
+    function imagenTocada(evento){
+      even = evento;
+
+      if (tocado == true){
+        ocultaMuestra(even);
+        
+        var imagen = even.currentTarget.firstElementChild.src;
+        
+        if (imagen == imagen_visible){
+          alert ("Imagenes iguales");
+        }
+        else {
+          alert ("equivocado");
+        }
+        
+        tocado = false;
+        
+      }
+      else {
+        ocultaMuestra(even);
+        imagen_visible = even.currentTarget.firstElementChild.src;
+        tocado = true;
+      }
+
+      
+    }
+
+    function ocultaMuestra(evento) {
+      //target, es el elemento tocado
+      //currentTarget, es el elemento contenedor
+      var img_tocado = evento.currentTarget.firstElementChild;
+      var estilo = img_tocado.style.visibility;
+      if (estilo == 'visible' || estilo == '') {
+        img_tocado.style.visibility = 'hidden';
+        
+      }
+      else {
+        img_tocado.style.visibility = 'visible';
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <table>
+  <tr>
+      <td><div><img src="desnutrido.jpeg" /></div></td>
+      <td><div><img src="obeso.jpeg" /></div></td>
+    </tr>
+    <tr>
+      <td><div><img src="obeso.jpeg" /></div></td>
+      <td><div><img src="desnutrido.jpeg" /></div></td>
+    </tr>
+  </table>
+</html>
