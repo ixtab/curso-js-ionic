@@ -25,31 +25,29 @@
       }
     }
 
-    function imagenTocada(evento){
+    function imagenTocada(evento) {
       even = evento;
 
-      if (tocado == true){
+      if (tocado == true) {
         ocultaMuestra(even);
-        
+
         var imagen = even.currentTarget.firstElementChild.src;
-        
-        if (imagen == imagen_visible){
-          alert ("Imagenes iguales");
+
+        if (imagen == imagen_visible) {
+          alert("Imagenes iguales");
         }
         else {
-          alert ("equivocado");
+          alert("equivocado");
         }
-        
+
         tocado = false;
-        
+
       }
       else {
         ocultaMuestra(even);
         imagen_visible = even.currentTarget.firstElementChild.src;
         tocado = true;
       }
-
-      
     }
 
     function ocultaMuestra(evento) {
@@ -57,26 +55,43 @@
       //currentTarget, es el elemento contenedor
       var img_tocado = evento.currentTarget.firstElementChild;
       var estilo = img_tocado.style.visibility;
-      if (estilo == 'visible' || estilo == '') {
-        img_tocado.style.visibility = 'hidden';
-        
-      }
-      else {
-        img_tocado.style.visibility = 'visible';
-      }
+      //if (estilo == 'visible' || estilo == '') {
+      //  img_tocado.style.visibility = 'hidden';
+
+      //}
+      // else {
+      img_tocado.style.visibility = 'visible';
+      //}
     }
   </script>
 </head>
 
 <body>
   <table>
-  <tr>
-      <td><div><img src="desnutrido.jpeg" /></div></td>
-      <td><div><img src="obeso.jpeg" /></div></td>
+    <tr>
+      <td>
+        <div>
+          <img src="desnutrido.jpeg" />
+        </div>
+      </td>
+      <td>
+        <div>
+          <img src="obeso.jpeg" />
+        </div>
+      </td>
     </tr>
     <tr>
-      <td><div><img src="obeso.jpeg" /></div></td>
-      <td><div><img src="desnutrido.jpeg" /></div></td>
+      <td>
+        <div>
+          <img src="obeso.jpeg" />
+        </div>
+      </td>
+      <td>
+        <div>
+          <img src="desnutrido.jpeg" />
+        </div>
+      </td>
     </tr>
   </table>
+
 </html>
