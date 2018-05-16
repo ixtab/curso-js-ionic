@@ -35,18 +35,29 @@
                 i++;
                 j--;
             }
-
-            alert (bd);
-            return bd;
             
+            return bd;
         }
-        function esPalindromo() {
-            var palindromo = true;
-            var cadena = document.getElementById("palabra").value;
-            var largo = cadena.length - 1;
-            for(var i = 0; palindromo && i < largo / 2; i++){
-                
+
+        function esPalindromo(){
+            palindromo = false;
+            palabra = document.getElementById("palabra").value;
+            palabraAlReves = darVuelta(palabra);
+            if (palabra == palabraAlReves){
+                palindromo = true;
             }
+            console.log(palindromo);
+        }
+
+        function darVuelta(cad) {
+            var longitud = cad.length-1;  
+	        var cadena = "";
+	        while (longitud>=0) {
+		        cadena = cadena + cad.charAt(longitud);
+		        longitud--;
+	        }       
+            alert(cadena);
+            return cadena;
         }
         
        
@@ -56,7 +67,7 @@
 <body>
     <label for="palabra">PALABRA</label>
     <input type="text" id="palabra">
-    <button onclick="esUnPalindromo();">Empieza</button>
+    <button onclick="esPalindromo();">Empieza</button>
 </body>
 
 </html>
