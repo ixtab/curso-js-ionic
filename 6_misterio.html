@@ -22,7 +22,8 @@
  *4) EXTRA: Sólo si resolviste los puntos anteriores, implementa una versión recursiva
 -->
     <script language="javascript">
-       function esUnPalindromo() {
+
+      /* function esUnPalindromo() {
             var bd = true;
             var cad = document.getElementById("palabra").value;
             var i = 0;
@@ -37,7 +38,7 @@
             }
             
             return bd;
-        }
+        } */
 
         function esPalindromo(){
             palindromo = false;
@@ -46,7 +47,12 @@
             if (palabra == palabraAlReves){
                 palindromo = true;
             }
-            console.log(palindromo);
+            if (palindromo == true) {
+                document.getElementById("resultado").innerHTML = "Es un palindromo";
+            }
+            else {
+                document.getElementById("resultado").innerHTML = "No es un palindromo";
+            }
         }
 
         function darVuelta(cad) {
@@ -56,11 +62,9 @@
 		        cadena = cadena + cad.charAt(longitud);
 		        longitud--;
 	        }       
-            alert(cadena);
             return cadena;
         }
         
-       
     </script>
 </head>
 
@@ -68,6 +72,7 @@
     <label for="palabra">PALABRA</label>
     <input type="text" id="palabra">
     <button onclick="esPalindromo();">Empieza</button>
+    <h1 id="resultado"></h1>
 </body>
 
 </html>
