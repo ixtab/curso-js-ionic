@@ -55,14 +55,14 @@
             }
         }
 
-        function darVuelta(cad) {
-            var longitud = cad.length-1;  
-	        var cadena = "";
+        function darVuelta(cadena) {
+	        var cadenaReves = "";
+            var longitud = cadena.length-1;  
 	        while (longitud>=0) {
-		        cadena = cadena + cad.charAt(longitud);
+		        cadenaReves = cadenaReves + cadena.charAt(longitud);
 		        longitud--;
 	        }       
-            return cadena;
+            return cadenaReves;
         }
         
     </script>
