@@ -23,28 +23,28 @@
 -->
     <script language="javascript">
 
-      /* function esUnPalindromo() {
-            var bd = true;
-            var cad = document.getElementById("palabra").value;
-            var i = 0;
-            var j = cad.length - 1;
+        /* function esUnPalindromo() {
+              var bd = true;
+              var cad = document.getElementById("palabra").value;
+              var i = 0;
+              var j = cad.length - 1;
+  
+              while ((i <= j) && (bd)) {
+                  bd = cad.charAt(i) == cad.charAt(j);
+                  console.log ("char en i(" + i + "): " + cad.charAt(i) +
+                       " y char en j(" + j + "): " + cad.charAt(j) + " y bd es: " + bd);
+                  i++;
+                  j--;
+              }
+              
+              return bd;
+          } */
 
-            while ((i <= j) && (bd)) {
-                bd = cad.charAt(i) == cad.charAt(j);
-                console.log ("char en i(" + i + "): " + cad.charAt(i) +
-                     " y char en j(" + j + "): " + cad.charAt(j) + " y bd es: " + bd);
-                i++;
-                j--;
-            }
-            
-            return bd;
-        } */
-
-        function esPalindromo(){
+        function esPalindromo() {
             palindromo = false;
             palabra = document.getElementById("palabra").value;
             palabraAlReves = darVuelta(palabra);
-            if (palabra == palabraAlReves){
+            if (palabra == palabraAlReves) {
                 palindromo = true;
             }
             if (palindromo == true) {
@@ -56,15 +56,14 @@
         }
 
         function darVuelta(cadena) {
-	        var cadenaReves = "";
-            var longitud = cadena.length-1;  
-	        while (longitud>=0) {
-		        cadenaReves = cadenaReves + cadena.charAt(longitud);
-		        longitud--;
-	        }       
+            var cadenaReves = "";
+            var longitud = cadena.length - 1;
+            while (longitud >= 0) {
+                cadenaReves = cadenaReves + cadena.charAt(longitud);
+                longitud--;
+            }
             return cadenaReves;
         }
-        
     </script>
 </head>
 
