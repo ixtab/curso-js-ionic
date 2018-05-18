@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        tr {
+            border-bottom: 1px solid black;
+        }
+    </style>
+    <script>
+        var array_datos = new Array;
+
+        function crear() {
+            var texto = document.getElementById("texto").value;
+
+            array_datos.push(texto);
+            console.log(array_datos);
+
+            var tabla = document.getElementById("tabla");
+            var nueva_fila = document.createElement("TR");
+            var columna = document.createElement("TD");
+
+            columna.innerHTML = texto;
+            nueva_fila.appendChild(columna);
+            tabla.appendChild(nueva_fila);
+
+            limpiar();
+
+        }
+
+        function limpiar() {
+            document.getElementById("texto").value = "";
+            document.getElementById('texto').focus();
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <input type="text" id="texto" onchange="crear()">
+    <button onclick="crear()">Pulsa para añadir</button>
+    <table id="tabla">
+
+    </table>
+
+</body>
+
+</html>
