@@ -5,28 +5,25 @@
     <meta charset="utf-8" />
     <title>Array Y Tabla dinámicas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <script>
         window.onload = inicia;
         var array_datos;
         var contador = 0;
 
-        function inicia ()
-        {
+        function inicia() {
             array_datos = new Array();// creo el Array con texto vacío
         }
 
-        function obtenerTexto ()
-        {
-            var texto = ''; 
-                texto = document.getElementById("texto").value;
+        function obtenerTexto() {
+            var texto = '';
+            texto = document.getElementById("texto").value;
             return texto;
         }
-        function filaTocada (evento)
-        {
+        function filaTocada(evento) {
             //TODO BORRAR LA COLUMA BIEN
             //Y BORRAR EN EL ARRAY ESA ENTRADA
-            console.log ("filatocada!!!");
+            console.log("filatocada!!!");
             var td_tocado = evento.target;
             var indice = td_tocado.id;
             td_tocado.parentNode.removeChild(td_tocado);
@@ -35,15 +32,22 @@
             reiniciaIndiceTabla();
         }
 
-        function reiniciaIndiceTabla(){
-
+        function reiniciaIndiceTabla() {
+            var fila = document.querySelectorAll("td");
+            var numero_elementos = fila.length;
+            for (i = 0; i < numero_elementos; i++) {
+                fila[i].id = i;
+                console.log("Fila id: " + fila[i].id);
+            }
+            console.log("Numero elementos: " + numero_elementos);
+            contador = numero_elementos;
+            console.log("Contador: " + contador);
         }
 
-        function insertarFila (texto)
-        {
+        function insertarFila(texto) {
             var tabla = document.getElementById("tabla");//obtengo referencia a la tabla
             var nueva_fila = document.createElement("TR");//creo la fila
-            
+
             var columna = document.createElement("TD");//creo la columna
             columna.innerHTML = texto;//pongo el texto a la columna
             columna.id = contador;
@@ -53,10 +57,9 @@
 
             nueva_fila.appendChild(columna);//añado la columna a la fila
             tabla.appendChild(nueva_fila);//añado la fila a la columna
-            
+
         }
-        function guardarArray (text)
-        {
+        function guardarArray(text) {
             //meto en el array
             array_datos.push(text);
             console.log("array después de insertar: " + array_datos);
@@ -68,9 +71,9 @@
         }
 
         function insertar() {
-            
+
             var texto = obtenerTexto();
-            guardarArray (texto);
+            guardarArray(texto);
             insertarFila(texto);
             limpiar();
 
@@ -83,6 +86,7 @@
 
     <input type="text" id="texto">
     <button onclick="insertar()">Pulsa para añadir</button>
+    <h1>Tabla</h1>
     <table id="tabla">
 
     </table>
