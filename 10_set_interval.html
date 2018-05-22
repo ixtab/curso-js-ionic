@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cambia de Imagen</title>
+
+    <style>
+        body {
+            display: flex;
+        }
+        .izquierda {
+            float: left;
+        }
+        .derecha {
+            float: right;
+        }
+    </style>
+
+    <script>
+    
+    var intervalo;
+    var foto = 0;
+
+    function establecerIntervalo(){
+        intervalo = setInterval(cambiaImagen, 1000);
+    }
+
+    function cambiaImagen(){
+        var imagen = document.getElementById("foto");
+        console.log (imagen.src);
+        if (foto == 0){
+            imagen.src = "imagenes/montana.jpg";
+            foto = 1;
+        }
+        else if (foto == 1){
+            imagen.src = "imagenes/ciudad.jpg";
+            foto = 2;
+        }
+        else if (foto == 2){
+            imagen.src = "imagenes/pueblo.jpeg"
+            foto = 3;
+        }
+        else {
+            imagen.src = "imagenes/playa.jpg";
+            foto = 0;
+        }
+    }
+
+    function paraintervalo(){
+        clearInterval(intervalo);
+    }
+
+    function muestraPlaya(){
+        document.getElementById("foto").src = "imagenes/playa.jpg";
+        paraintervalo();
+    }
+
+    function muestraMontana(){
+        document.getElementById("foto").src = "imagenes/montana.jpg";
+        paraintervalo();
+    }
+
+    function muestraCiudad(){
+        document.getElementById("foto").src = "imagenes/ciudad.jpg";
+        paraintervalo();
+    }
+
+    function muestraPueblo(){
+        document.getElementById("foto").src = "imagenes/pueblo.jpeg";
+        paraintervalo();
+    }
+
+    </script>
+</head>
+<body>
+    <div>
+        <img src="imagenes/playa.jpg" width="800px" height="534px" id="foto">
+        <br>
+        <div class="izquierda">
+            <button onclick="muestraPlaya()">Playa</button>
+            <button onclick="muestraMontana()">Montaña</button>
+            <button onclick="muestraCiudad()">Ciudad</button>
+            <button onclick="muestraPueblo()">Pueblo</button>
+        </div>
+        <div class="derecha">
+            <button onclick="establecerIntervalo()">Play</button>
+            <button onclick="paraintervalo()">Stop</button>
+        </div>
+
+    </div>
+</body>
+</html>
