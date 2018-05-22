@@ -9,6 +9,7 @@
     <script>
         window.onload = inicia;
         var array_datos;
+        var contador = 0;
 
         function inicia ()
         {
@@ -21,6 +22,23 @@
                 texto = document.getElementById("texto").value;
             return texto;
         }
+        function filaTocada (evento)
+        {
+            //TODO BORRAR LA COLUMA BIEN
+            //Y BORRAR EN EL ARRAY ESA ENTRADA
+            console.log ("filatocada!!!");
+            var td_tocado = evento.target;
+            var indice = td_tocado.id;
+            td_tocado.parentNode.removeChild(td_tocado);
+            array_datos.splice(indice, 1);
+            console.log("array después de borrar: " + array_datos);
+            reiniciaIndiceTabla();
+        }
+
+        function reiniciaIndiceTabla(){
+
+        }
+
         function insertarFila (texto)
         {
             var tabla = document.getElementById("tabla");//obtengo referencia a la tabla
@@ -28,27 +46,25 @@
             
             var columna = document.createElement("TD");//creo la columna
             columna.innerHTML = texto;//pongo el texto a la columna
+            columna.id = contador;
+            contador++;
+            console.log("id: " + columna.id);
+            columna.addEventListener('click', filaTocada);
 
-            nueva_fila.addEventListener('click', borrar);
             nueva_fila.appendChild(columna);//añado la columna a la fila
             tabla.appendChild(nueva_fila);//añado la fila a la columna
-           
+            
         }
         function guardarArray (text)
         {
             //meto en el array
             array_datos.push(text);
-            console.log(array_datos);
+            console.log("array después de insertar: " + array_datos);
         }
 
         function limpiar() {
             document.getElementById("texto").value = "";
             document.getElementById('texto').focus();
-        }
-
-        function borrar(evento){
-            console.log("kajhsdfkfjh");
-           tabla = document.getElementById(tabla);
         }
 
         function insertar() {
@@ -65,7 +81,7 @@
 
 <body>
 
-    <input type="text" id="texto" onchange="insertar()">
+    <input type="text" id="texto">
     <button onclick="insertar()">Pulsa para añadir</button>
     <table id="tabla">
 
