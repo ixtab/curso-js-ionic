@@ -73,11 +73,12 @@
         }
 
         function insertar() {
-
             var texto = obtenerTexto();
-            guardarArray(texto);
-            insertarFila(texto);
-            limpiar();
+            if (texto !=""){
+              guardarArray(texto);
+              insertarFila(texto);
+              limpiar();
+            }
 
         }
 
