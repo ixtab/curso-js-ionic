@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cambia de Imagen</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+        .izquierda {
+            float: left;
+        }
+        .derecha {
+            float: right;
+        }
+
+        .contenedor {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+
+    <script>
+    var arrayFotos;
+    var intervalo;
+    var foto;
+    var imagen;
+    window.onload = inicio;
+    
+    function inicio() {
+        arrayFotos = ["0.jpg", "1.jpg", "2.jpg", "3.jpg"]; /* Añadir aquí las fotos que se quieran
+        mostrar y que como nombre tengan numeros consecutivos. Las fotos hay que añadirlas a la carpeta imagenes.*/
+        foto = 0;
+        imagen  = document.getElementById("foto");
+        creaBotones();
+    }
+
+    function creaBotones(){ // Crea un boton para cada foto en el array
+        for (i = 0; i < arrayFotos.length; i++){
+            console.log ("i: " + i)
+            div = document.getElementById("div-botones");
+            boton = document.createElement("BUTTON");
+            boton.innerHTML = "<img src='imagenes/" + i + ".jpg' onclick = botonImagen("+ i +") width='80px' height='53px'>";
+            console.log (boton.innerHTML);
+            div.appendChild(boton);
+        }
+    }
+
+    function establecerIntervalo(){
+        intervalo = setInterval(cambiaImagen, 1000);
+    }
+
+    function botonImagen(image) {
+        muestraImagen(image);
+        paraIntervalo(); // Si no se para al dar al botón de una imagen siguen cambiando.
+    }
+
+    function muestraImagen(image){
+        imagen.src = "imagenes/" + image +".jpg";
+    }
+
+    function cambiaImagen(){
+        if (foto < arrayFotos.length-1){
+            foto = foto + 1;;
+        }
+        else {
+            foto = 0;
+        }
+        muestraImagen(foto);
+    }
+
+    function paraIntervalo(){
+        clearInterval(intervalo);
+    }
+
+    /* 
+    function muestraPlaya(){
+        document.getElementById("foto").src = "imagenes/playa.jpg";
+        paraintervalo();
+    }
+
+    function muestraMontana(){
+        document.getElementById("foto").src = "imagenes/montana.jpg";
+        paraintervalo();
+    }
+
+    function muestraCiudad(){
+        document.getElementById("foto").src = "imagenes/ciudad.jpg";
+        paraintervalo();
+    }
+
+    function muestraPueblo(){
+        document.getElementById("foto").src = "imagenes/pueblo.jpeg";
+        paraintervalo();
+    } 
+    */
+
+    </script>
+</head>
+<body>
+    <div class="contenedor">
+        <img src="imagenes/0.jpg" width="600px" height="400px" id="foto">
+        <br>
+        <div class="izquierda" id="div-botones">
+         <!--
+            <button onclick="muestraImagen(0)"><img src="imagenes/0.jpg" width="80px" height="53px"></button>
+            <button onclick="muestraImagen(1)"><img src="imagenes/1.jpg" width="80px" height="53px"></button>
+            <button onclick="muestraImagen(2)"><img src="imagenes/2.jpg" width="80px" height="53px"></button>
+            <button onclick="muestraImagen(3)"><img src="imagenes/3.jpg" width="80px" height="53px"></button>
+        -->
+        </div>
+        <div class="derecha">
+            <button onclick="establecerIntervalo()">Play</button>
+            <button onclick="paraIntervalo()">Stop</button>
+        </div>
+
+    </div>
+</body>
+</html>
