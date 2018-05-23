@@ -38,7 +38,7 @@
        /* Si a las fotos se las llama con números consecutivos que empiecen por 0 no hace falta crear un array con las fotos. Si tienen nombres distintos la variable totalFotos seria = arrayFotos.length 
        y al llamar a las imagenes en los bucles for i (indice) habría que cambiarlo por arrayFotos[i] y quitar .jpg */
 
-        totalFotos = 4; 
+        totalFotos = 5; 
         foto = 0;
         imagen  = document.getElementById("foto");
         funcionando = false;
@@ -68,8 +68,8 @@
 
     function botonImagen(image) {
         muestraImagen(image);
-        funcionando = false;
         paraIntervalo(); // Si no se para al dar al botón de una imagen siguen cambiando.
+        funcionando = false;
     }
 
     function muestraImagen(image){
