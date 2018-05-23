@@ -25,46 +25,60 @@
     </style>
 
     <script>
-    var arrayFotos;
+    // var arrayFotos;
     var intervalo;
     var foto;
+    var totalFotos;
     var imagen;
+    var funcionando;
     window.onload = inicio;
     
     function inicio() {
-        arrayFotos = ["0.jpg", "1.jpg", "2.jpg", "3.jpg"]; /* Añadir aquí las fotos que se quieran
-        mostrar y que como nombre tengan numeros consecutivos. Las fotos hay que añadirlas a la carpeta imagenes.*/
+       // arrayFotos = ["0.jpg", "1.jpg", "2.jpg", "3.jpg"]; 
+       /* Si a las fotos se las llama con números consecutivos que empiecen por 0 no hace falta crear un array con las fotos. Si tienen nombres distintos la variable totalFotos seria = arrayFotos.length 
+       y al llamar a las imagenes en los bucles for i (indice) habría que cambiarlo por arrayFotos[i] y quitar .jpg */
+
+        totalFotos = 4; 
         foto = 0;
         imagen  = document.getElementById("foto");
+        funcionando = false;
         creaBotones();
     }
 
     function creaBotones(){ // Crea un boton para cada foto en el array
-        for (i = 0; i < arrayFotos.length; i++){
+        for (i = 0; i < totalFotos; i++){ 
             console.log ("i: " + i)
             div = document.getElementById("div-botones");
             boton = document.createElement("BUTTON");
-            boton.innerHTML = "<img src='imagenes/" + i + ".jpg' onclick = botonImagen("+ i +") width='80px' height='53px'>";
+            boton.innerHTML = "<img src='imagenes/" + i + ".jpg' onclick = botonImagen("+ i +") width='80px' height='53px'>"; 
+            // con array:
+            // boton.innerHTML = "<img src='imagenes/" + arrayFotos[i]' + "onclick = botonImagen("+ i +") width='80px' height='53px'>"; */
+
             console.log (boton.innerHTML);
             div.appendChild(boton);
         }
     }
 
     function establecerIntervalo(){
-        intervalo = setInterval(cambiaImagen, 1000);
+        if (funcionando == false){ // Si se da 2 veces seguidas al boton play la secuencia de fotos sigue pasando y no se puede para. de esta forma se corrige este error.
+            intervalo = setInterval(cambiaImagen, 1000);
+            funcionando = true;
+        }
     }
 
     function botonImagen(image) {
         muestraImagen(image);
+        funcionando = false;
         paraIntervalo(); // Si no se para al dar al botón de una imagen siguen cambiando.
     }
 
     function muestraImagen(image){
         imagen.src = "imagenes/" + image +".jpg";
+        // con array: imagen.src = "imagenes/" + arrayFotos[image];
     }
 
     function cambiaImagen(){
-        if (foto < arrayFotos.length-1){
+        if (foto < totalFotos-1){ 
             foto = foto + 1;;
         }
         else {
@@ -75,6 +89,7 @@
 
     function paraIntervalo(){
         clearInterval(intervalo);
+        funcionando = false;
     }
 
     </script>
