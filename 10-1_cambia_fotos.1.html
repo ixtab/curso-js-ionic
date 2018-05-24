@@ -25,67 +25,62 @@
     </style>
 
     <script>
-    // var arrayFotos;
+    var arrayFotos;
     var intervalo;
     var foto;
     var totalFotos;
     var imagen;
-    var funcionando;
+    var funcionando; // booleano para que no se pueda estabec el intevalo si ya está funcionando.
     window.onload = inicio;
     
     function inicio() {
-       // arrayFotos = ["0.jpg", "1.jpg", "2.jpg", "3.jpg"]; 
-       /* Si a las fotos se las llama con números consecutivos que empiecen por 0 no hace falta crear un array con las fotos. 
-          Si tienen nombres distintos la variable totalFotos seria = arrayFotos.length
-          y al llamar a las imagenes en los bucles for i (indice) habría que cambiarlo por arrayFotos[i] y quitar .jpg */
-
-        totalFotos = 48; 
+        arrayFotos = ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "nieve.jpg"]; 
+        totalFotos = arrayFotos.length; 
         foto = 0;
         imagen  = document.getElementById("foto");
         funcionando = false;
         creaBotones();
     }
 
-    function creaBotones(){ // Crea un boton para cada foto
+    // Crea un boton para cada foto
+    function creaBotones(){ 
         for (i = 0; i < totalFotos; i++){ 
-            console.log ("i: " + i)
             div = document.getElementById("div-botones");
             boton = document.createElement("BUTTON");
-            boton.innerHTML = "<img src='imagenes/" + i + ".jpg' onclick = botonImagen("+ i +") width='80px' height='53px'>"; 
-            // con array:
-            // boton.innerHTML = "<img src='imagenes/" + arrayFotos[i]' + "onclick = botonImagen("+ i +") width='80px' height='53px'>"; */
-
-            console.log (boton.innerHTML);
+            boton.innerHTML = "<img src='imagenes/" + arrayFotos[i] + "'onclick = botonImagen("+ i +") width='80px' height='53px'>";
             div.appendChild(boton);
         }
     }
 
     function establecerIntervalo(){
-        if (funcionando == false){ // Si se da 2 veces seguidas al boton play la secuencia de fotos sigue pasando y no se puede para. de esta forma se corrige este error.
+        if (funcionando == false){ // Si se da 2 veces seguidas al boton play la secuencia de fotos sigue pasando y no se puede para, de esta forma se corrige este error.
             intervalo = setInterval(cambiaImagen, 1000);
             funcionando = true;
         }
     }
 
-    function botonImagen(image) {
+    // Pone la imagen del bóton al que se ha dado
+    function botonImagen(image) { 
         muestraImagen(image);
         paraIntervalo(); // Si no se para al dar al botón de una imagen siguen cambiando.
         funcionando = false;
+        foto = image; // para que el carrusel empiece en esta imagen.
     }
 
+    // Pone la imagen que toque 
     function muestraImagen(image){
-        imagen.src = "imagenes/" + image +".jpg";
-        // con array: imagen.src = "imagenes/" + arrayFotos[image];
+        imagen.src = "imagenes/" + arrayFotos[image];
     }
+
 
     function cambiaImagen(){
+        muestraImagen(foto);
         if (foto < totalFotos-1){ 
             foto = foto + 1;;
         }
         else {
             foto = 0;
         }
-        muestraImagen(foto);
     }
 
     function paraIntervalo(){
