@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formulario</title>
+
+<script>
+
+    var xmlHttp = new XMLHttpRequest();
+
+    const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/RegistrarPersona";
+
+    function procesarEventos(){
+        console.log("Procesar eventos Invocado " + xmlHttp.readyState);
+        if  (xmlHttp.readyState == 4){
+        respuesta = xmlHttp.responseText;
+        document.getElementById("respuesta").innerHTML = respuesta; 
+        } 
+
+    }
+
+    function enviarDatos(){
+        var name = document.getElementById("nombre").value;
+        var age = document.getElementById("edad").value;
+        console.log(name, edad); // ????
+
+        var persona = {
+            nombre:name,
+            edad:age
+        };
+        //alert("persona intro = " + persona.nombre);
+        //alert("persona intro = " + persona.edad);
+
+        persona_json = JSON.stringify(persona);
+
+        console.log(persona_json);
+
+        xmlHttp.onreadystatechange = procesarEventos;
+        xmlHttp.open('POST', DIR_SERV, true); // header
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');//tipo de info que viaja en el cuerpo
+        xmlHttp.send(persona_json);//cuerpo del msj
+
+        
+    }
+</script>
+
+</head>
+<body>
+    <input type="text" id="nombre">
+    <input type="number" id="edad">
+    <button onclick="enviarDatos()">Enviar</button>
+    <h1 id="respuesta"></h1>
+</body>
+</html>
