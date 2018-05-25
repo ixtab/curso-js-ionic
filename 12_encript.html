@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cifrado</title>
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+        const DIR_SERV_CLAVE = "http://10.1.2.10:8080/appwebprofe/ObtenerClave";
+        const DIR_SERV_ENVIAR = "http://10.1.2.10:8080/appwebprofe/EnviarMensaje";
+        var clave_recibida;
+        var texto_encriptado = "";
+        var texto_introducido;
+        var texto_recibido;
+        onload = obtenerClave;
+
+    function procesarEventosRecibir(){
+        console.log("Procesar eventos Invocado " + xmlHttp.readyState);
+        if  (xmlHttp.readyState == 4){
+        clave_recibida = xmlHttp.responseText; 
+        } 
+    }
+    function procesarEventosEnviar(){
+        console.log("Procesar eventos Invocado " + xmlHttp.readyState);
+        if  (xmlHttp.readyState == 4){
+        texto_recibido = xmlHttp.responseText; 
+        document.getElementById("texto_recibido").innerHTML = texto_recibido;
+        } 
+    }
+
+    function obtenerClave(){
+        xmlHttp.onreadystatechange = procesarEventosRecibir;
+        xmlHttp.open('GET', DIR_SERV_CLAVE, true); 
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+        xmlHttp.send(null);
+
+    }
+
+    function encriptar(){
+        texto_introducido = "";
+        texto_encriptado = "";
+        texto_introducido = document.getElementById("texto_introducido").value;
+        var longitud_texto = texto_introducido.length;
+        
+        console.log(clave_recibida);
+        for (i = 0; i < longitud_texto; i++){
+            texto_encriptado = texto_encriptado + ( parseInt(texto_introducido.charCodeAt(i))  + parseInt(clave_recibida) );
+        }
+        document.getElementById("texto_encriptado").value = texto_encriptado;
+    }
+
+    function enviarCifrado(){
+        mensaje = {
+            mensaje_original:texto_introducido,
+            mensaje_cifrado:texto_encriptado,
+            clave:clave_recibida
+        }
+        mensaje_json = JSON.stringify(mensaje)
+        xmlHttp.onreadystatechange = procesarEventosEnviar;
+        xmlHttp.open('POST', DIR_SERV_ENVIAR,true);
+        xmlHttp.setRequestHeader('Content-Type', 'application/json');
+        xmlHttp.send(mensaje_json);
+    }
+
+    </script>
+</head>
+<body>
+    <textarea id="texto_introducido" cols="30" rows="10"></textarea>
+    <button onclick="encriptar()">Encriptar</button>
+    <textarea id="texto_encriptado" cols="30" rows="10"></textarea>
+    <br>
+    <button onclick="enviarCifrado()">Enviar texto cifrado</button>
+    <br>
+    <p id="texto_recibido"></p>
+</body>
+</html>
