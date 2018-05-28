@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Busca canciones en iTunes</title>
+    <style>
+        table {
+            border: 4px solid black;
+        }
+    </style>
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+        var url; 
+        var lista;
+
+        function procesarEventosRecibir(){
+            var lista;
+            console.log("Procesar eventos Invocado Recibir " + xmlHttp.readyState + ". Status " + xmlHttp.status);
+            if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            lista = xmlHttp.responseText; 
+           // console.log(lista);
+            lista = JSON.parse(lista);
+           // console.log(lista_json);
+            lista = lista.results;
+            console.log(lista);
+            imprimirLista(lista);
+            } 
+            else {
+                lista = "ERROR";
+            } 
+            
+
+        }
+    
+        function obtenerListaRemota(){
+            xmlHttp.onreadystatechange = procesarEventosRecibir;
+            xmlHttp.open('GET', url, true); 
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.send(null);
+        }
+
+        function buscarCancion(){
+            busqueda = document.getElementById("caja").value;
+            url = "https://itunes.apple.com/search?term=" + busqueda + "&media=music&limit=20";
+            console.log(url);
+            obtenerListaRemota();
+        }
+
+        function imprimirLista(lista){
+            var tabla = document.getElementById("tabla");
+            var nueva_fila;
+            var nueva_columna;
+            console.log(lista.length);
+            for (i = 0; i < lista.length; i++){
+                nueva_fila = document.createElement("TR");
+                nueva_fila.id = "fila" + i;
+                console.log(nueva_fila.id);
+                tabla.appendChild(nueva_fila);
+                
+                for (j = 0; j < 6; j++){
+                    nueva_columna = document.createElement("TD");
+                    nueva_columna.id = "columna" + j;
+                    nueva_columna.innerHTML = lista[i].artistName;
+                    console.log(nueva_columna.id);
+                    nueva_columna.appendChild(nueva_fila);
+                }
+            }
+        }
+
+
+
+    </script>
+</head>
+<body>
+    <input type="text" id = "caja">
+    <button onclick="buscarCancion()">Buscar</button>
+    <table id="tabla">
+
+    </table>
+    </p>
+</body>
+</html>

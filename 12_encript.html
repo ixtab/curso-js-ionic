@@ -26,6 +26,7 @@
     }
     function procesarEventosEnviar(){
         console.log("Procesar eventos Invocado Enviar " + xmlHttp.readyState + ". Status " + xmlHttp.status);
+        console.log(xmlHttp.getAllResponseHeaders());
         if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
             texto_recibido = xmlHttp.responseText; 
             document.getElementById("texto_recibido").innerHTML = texto_recibido;
