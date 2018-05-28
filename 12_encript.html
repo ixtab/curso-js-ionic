@@ -16,17 +16,23 @@
         onload = obtenerClave;
 
     function procesarEventosRecibir(){
-        console.log("Procesar eventos Invocado " + xmlHttp.readyState);
-        if  (xmlHttp.readyState == 4){
+        console.log("Procesar eventos Invocado Recibir " + xmlHttp.readyState + ". Status " + xmlHttp.status);
+        if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
         clave_recibida = xmlHttp.responseText; 
         } 
+        else {
+            clave_recibida = "ERROR";
+        }
     }
     function procesarEventosEnviar(){
-        console.log("Procesar eventos Invocado " + xmlHttp.readyState);
-        if  (xmlHttp.readyState == 4){
-        texto_recibido = xmlHttp.responseText; 
-        document.getElementById("texto_recibido").innerHTML = texto_recibido;
+        console.log("Procesar eventos Invocado Enviar " + xmlHttp.readyState + ". Status " + xmlHttp.status);
+        if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+            texto_recibido = xmlHttp.responseText; 
+            document.getElementById("texto_recibido").innerHTML = texto_recibido;
         } 
+        else {
+            document.getElementById("texto_recibido").innerHTML = "Error de conexión";
+        }
     }
 
     function obtenerClave(){
@@ -44,19 +50,24 @@
         var longitud_texto = texto_introducido.length;
         
         console.log(clave_recibida);
-        for (i = 0; i < longitud_texto; i++){
-            texto_encriptado = texto_encriptado + ( parseInt(texto_introducido.charCodeAt(i))  + parseInt(clave_recibida) );
+        if (clave_recibida != "ERROR"){
+            for (i = 0; i < longitud_texto; i++){
+                texto_encriptado = texto_encriptado + ( parseInt(texto_introducido.charCodeAt(i))  + parseInt(clave_recibida) );
+            }
+                document.getElementById("texto_encriptado").value = texto_encriptado;
         }
-        document.getElementById("texto_encriptado").value = texto_encriptado;
+        else {
+            document.getElementById("texto_encriptado").value = "Error de conexión"
+        }
     }
 
     function enviarCifrado(){
-        mensaje = {
+        var mensaje = {
             mensaje_original:texto_introducido,
             mensaje_cifrado:texto_encriptado,
             clave:clave_recibida
         }
-        mensaje_json = JSON.stringify(mensaje)
+        var mensaje_json = JSON.stringify(mensaje)
         xmlHttp.onreadystatechange = procesarEventosEnviar;
         xmlHttp.open('POST', DIR_SERV_ENVIAR,true);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
