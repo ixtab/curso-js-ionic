@@ -15,9 +15,9 @@
     function procesarEventos(){
         console.log("Procesar eventos Invocado " + xmlHttp.readyState);
         if  (xmlHttp.readyState == 4){
-        respuesta_json = xmlHttp.responseText;
-        respuesta = JSON.parse(respuesta_json);
-        document.getElementById("respuesta").innerHTML = respuesta.saludo + " " + respuesta.nombre; 
+            respuesta_json = xmlHttp.responseText;
+            respuesta = JSON.parse(respuesta_json);
+            document.getElementById("respuesta").innerHTML = respuesta.saludo + " " + respuesta.nombre; 
         } 
 
     }
