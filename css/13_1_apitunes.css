@@ -1,0 +1,18 @@
+body{
+    font-family: 'Righteous', cursive;
+}
+td { 
+    width: 300px;
+    text-align: center;
+    padding: 2px;
+}
+th {
+    border-bottom: 1px solid black;
+}
+#boton_compra {
+    width: 100%;
+    padding: 2px;
+}
+audio {
+    border: 2px solid black; 
+}
