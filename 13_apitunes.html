@@ -6,17 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Busca canciones en iTunes</title>
     <style>
-        table {
-            border: 4px solid black;
+        td { 
+            max-width: 300px;
         }
+
     </style>
     <script>
         var xmlHttp = new XMLHttpRequest();
         var url; 
         var lista;
+        var tabla;
+
+        onload = inicio;
+
+        function inicio(){
+            tabla = document.getElementById("tabla");
+        }
 
         function procesarEventosRecibir(){
-            var lista;
             console.log("Procesar eventos Invocado Recibir " + xmlHttp.readyState + ". Status " + xmlHttp.status);
             if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
             lista = xmlHttp.responseText; 
@@ -25,16 +32,15 @@
            // console.log(lista_json);
             lista = lista.results;
             console.log(lista);
-            imprimirLista(lista);
+            imprimirLista();
             } 
             else {
                 lista = "ERROR";
             } 
-            
-
         }
     
         function obtenerListaRemota(){
+            buscando();
             xmlHttp.onreadystatechange = procesarEventosRecibir;
             xmlHttp.open('GET', url, true); 
             xmlHttp.setRequestHeader('Content-Type', 'application/json');
@@ -47,37 +53,84 @@
             console.log(url);
             obtenerListaRemota();
         }
-
-        function imprimirLista(lista){
-            var tabla = document.getElementById("tabla");
-            var nueva_fila;
-            var nueva_columna;
+        
+        function imprimirLista() {
             console.log(lista.length);
-            for (i = 0; i < lista.length; i++){
-                nueva_fila = document.createElement("TR");
-                nueva_fila.id = "fila" + i;
-                console.log(nueva_fila.id);
-                tabla.appendChild(nueva_fila);
-                
-                for (j = 0; j < 6; j++){
-                    nueva_columna = document.createElement("TD");
-                    nueva_columna.id = "columna" + j;
-                    nueva_columna.innerHTML = lista[i].artistName;
-                    console.log(nueva_columna.id);
-                    nueva_columna.appendChild(nueva_fila);
+            document.getElementById("gif").src = "";
+            
+            var cancion;
+            var fila;
+            var array_campos = ["Título", "Artista","Imagen","Preview", "Precio"];
+            
+            var titulo;
+            var artista;
+            var imagen;
+            var preview;
+            var precio;
+            
+            if (lista.length > 0){
+                    crearCabecera(array_campos);
+
+                for(i = 0; i < lista.length; i++){
+                    cancion = document.createElement("TR");
+                    tabla.appendChild(cancion);
+
+                    titulo = document.createElement("TD");
+                    titulo.innerHTML = "Título: "+ lista[i].trackName;
+                    cancion.appendChild(titulo);
+                    
+                    artista = document.createElement("TD");
+                    artista.innerHTML = "Artista: "+ lista[i].artistName;
+                    cancion.appendChild(artista);
+
+                    imagen = document.createElement("TD");
+                    imagen.innerHTML = "<img src=" +lista[i].artworkUrl100 +">";
+                    cancion.appendChild(imagen);
+
+                    preview = document.createElement("TD");
+                    preview.innerHTML = "<audio src=" + lista[i].previewUrl + " controls>";
+                    cancion.appendChild(preview);
+
+                    precio = document.createElement("TD");
+                    precio.innerHTML = "Precio: " + (lista[i].trackPrice + 2) + " " + lista[i].currency;
+                    cancion.appendChild(precio);
+
                 }
+                
             }
+            else {
+                tabla.innerHTML = "No hay resultados para tu busqueda";
+            }
+
         }
 
+        function buscando(){
 
+            document.getElementById("gif").src= "imagenes/buscando.gif"
+            document.getElementById("tabla").innerHTML = "";
+        }
+
+        function crearCabecera(array){
+            var cab;
+            for (i=0; i < array.length; i++){
+                cab = document.createElement("TH");
+                cab.innerHTML = array[i];
+                tabla.appendChild(cab);
+            }
+
+        }
 
     </script>
 </head>
 <body>
-    <input type="text" id = "caja">
-    <button onclick="buscarCancion()">Buscar</button>
-    <table id="tabla">
+    <div id="busqueda">
+        <input type="text" id = "caja" onchange="buscarCancion()">
+        <button onclick="buscarCancion()">Buscar</button>
+    </div>
 
+    <img src="" id="gif">
+    
+    <table id="tabla">
     </table>
     </p>
 </body>
