@@ -42,8 +42,7 @@ function imprimirLista() {
     document.getElementById("gif").hidden = true;
     
     var cancion;
-    var array_fila = new Array()
-;
+    var array_fila = new Array;
     var array_campos = ["Título", "Artista","Imagen","Preview", "Precio", "Seleccionar"];
 
     if (lista.length > 0){
@@ -66,7 +65,7 @@ function imprimirLista() {
                         "<audio src=" + lista[i].previewUrl + " controls>",
                         (lista[i].trackPrice + 2) + " " + lista[i].currency,
                         "<input type='checkbox' name ='comprar' value='" + lista[i].trackId + "'>"
-                        ];
+                        ]
             crearFila(i, array_fila);
             document.getElementById("boton_compra").hidden = false;
         }
