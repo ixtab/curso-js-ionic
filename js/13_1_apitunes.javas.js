@@ -2,17 +2,12 @@ var xmlHttp;
 var url; 
 var lista;
 var tabla;
-var precio_total;
-var canciones_pedidas;
-const DIR_SERV_ENVIAR = "http://10.1.2.10:8080/appwebprofe/Comprar";
 
 onload = inicio;
 
 function inicio(){
     xmlHttp = new XMLHttpRequest();
     tabla = document.getElementById("tabla");
-    precio_total = 0;
-    canciones_pedidas = new Array();
 }
 
 function procesarEventosRecibir(){
@@ -27,21 +22,6 @@ function procesarEventosRecibir(){
         lista = "ERROR";
     } 
 }
-
-function procesarEventosEnviar(){
-    console.log("Procesar eventos Invocado Enviar " + xmlHttp.readyState + ". Status " + xmlHttp.status);
-    console.log(xmlHttp.getAllResponseHeaders());
-    if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-        document.getElementById("tabla").innerHTML = "Pedido enviado";
-        document.getElementById("boton_compra").hidden = true;
-        window.open("https://www.paypal.com/signin?country.x=ES&locale.x=es_ES", "new");
-        
-    } 
-    else {
-        document.getElementById("tabla").innerHTML = "Error de conexión. Pedido no enviado";
-    }
-}
-
 
 function obtenerListaRemota(){
     buscando();
@@ -62,8 +42,7 @@ function imprimirLista() {
     document.getElementById("gif").hidden = true;
     
     var cancion;
-    var array_fila = new Array()
-;
+    var array_fila = new Array;
     var array_campos = ["Título", "Artista","Imagen","Preview", "Precio", "Seleccionar"];
 
     if (lista.length > 0){
@@ -85,8 +64,8 @@ function imprimirLista() {
                         "<img src=" +lista[i].artworkUrl100 +">",
                         "<audio src=" + lista[i].previewUrl + " controls>",
                         (lista[i].trackPrice + 2) + " " + lista[i].currency,
-                        "<input type='checkbox' name ='comprar' id = 'checkbox" + i + "' value='" + lista[i].trackId + "'>"
-                        ];
+                        "<input type='checkbox' name ='comprar' value='" + lista[i].trackId + "'>"
+                        ]
             crearFila(i, array_fila);
             document.getElementById("boton_compra").hidden = false;
         }
@@ -122,38 +101,3 @@ function crearFila(fila_num, array){
         fila.appendChild(celda);
     }
 }
-
-function comprar(){
-    var i;
-    precio_total = 0;
-    canciones_pedidas = [];
-    for (i=0; i < lista.length; i++){
-        checkbox = document.getElementById("checkbox"+i);
-        if (checkbox.checked){
-            precio_total = precio_total + lista[i].trackPrice + 2;
-           canciones_pedidas.push(checkbox.value);
-        }
-        console.log (precio_total);
-        console.log (canciones_pedidas);
-    }
-    if (precio_total > 0){
-        enviarCompra();
-    }
-    else {
-        alert ("No has seleccionado ninguna canción");
-    }
-}
-
-function enviarCompra(){
-    
-    precio_total = precio_total.toFixed(2);
-    var pedido = {
-        precio_pedido:precio_total,
-        lista_ids:canciones_pedidas
-    };
-    var pedido_json = JSON.stringify(pedido);
-    xmlHttp.onreadystatechange = procesarEventosEnviar;
-    xmlHttp.open('POST', DIR_SERV_ENVIAR,true);
-    xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.send(pedido_json);
- }
