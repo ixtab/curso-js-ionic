@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Ordenando objetos</title>
+
+	<script type="text/javascript">
+		var coche1 = {
+			marca: "Ford",
+			modelo: "Focus",
+			anio: 2005,
+			puertas:5
+		}
+
+		var coche2 = {
+			marca: "Renault",
+			modelo: "Clio",
+			anio: 2002,
+			puertas:4
+		}
+
+		var coche3 = {
+			marca: "Honda",
+			modelo: "Civic",
+			anio: 2014,
+			puertas:5
+		}
+
+		var coche4 = {
+			marca: "Fiat",
+			modelo: "Panda",
+			anio: 2017,
+			puertas:3
+		}
+
+		var coche5 = {
+			marca: "Ferrari",
+			modelo: "F40",
+			anio: 1991,
+			puertas:2
+		}
+
+		var array = [coche1, coche2, coche3, coche4, coche5];
+		console.log(array);
+		onload = escribirArray;
+
+		var parrafo;
+			var i;
+			var coche;
+			var cochesOrdenados;
+		
+		function escribirArray(){
+			parrafo;
+			 			 coches = document.getElementById("coches");
+			for (i = 0; i < array.length; i++){
+				parrafo = document.createElement("P");
+				parrafo.innerHTML = "Marca: " + array[i].marca + ". Modelo: " + array[i].modelo +
+									". Año: " + array[i].anio + ". Puertas: " + array[i].puertas +".";
+				coches.appendChild(parrafo);
+			}
+		}
+
+		function ordenarPorAnio(){
+			
+			for (i = 0; i < array.length; i++){
+				array[i].puesto = i;
+				comparar(i); 
+				escribirArrayOrdenado(i);
+			}	
+		}
+
+		function comparar(indice_recibido){
+		;
+			for (i = 0; i < indice_recibido; i++){
+				console.log("i: " + i, "indice_recibido: " + indice_recibido)
+				if (array[i].anio > array[indice_recibido].anio){
+					array[i].puesto = array[i].puesto + 1;
+					array[indice_recibido].puesto = array[indice_recibido].puesto - 1;
+				}
+			}		
+		}
+
+		function escribirArrayOrdenado(indice_recibido){
+			
+			
+			cohesOrdenados = document.getElementById("cochesOrdenados");
+			// TODO while para buscar 
+				if (array[i].puesto = 0){
+					cochesOrdenados.innerHTML = "Marca: " + array[i].marca + ". Modelo: " + array[i].modelo +
+									". Año: " + array[i].anio + ". Puertas: " + array[i].puertas +".";
+				}
+		}
+		
+	</script>
+
+</head>
+<body>
+	<div id="coches">
+		
+	</div>
+	<button onclick="ordenarPorAnio()">Ordenar por año</button>
+	<div id="cochesOrdenados">
+		
+	</div>
+</body>
+</html>
