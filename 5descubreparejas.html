@@ -133,10 +133,17 @@
             var list = lista_recibida.ranking;
             var records = document.getElementById("records");
             var i;
+            var celda;
             for ( i = 0; i < list.length; i++){
-                linea = document.createElement("P");
-                linea.innerHTML = list[i].nombre + ": " + list[i].tiempo;
+                linea = document.createElement("TR");
+                linea.id = linea + i;
                 records.appendChild(linea);
+                celda = document.createElement("TD");
+                celda.innerHTML = list[i].nombre;
+                linea.appendChild(celda);
+                celda = document.createElement("TD");
+                celda.innerHTML = list[i].tiempo;
+                linea.appendChild(celda);
             }
         }
 
@@ -162,18 +169,18 @@
 <body>
     <table>
         <tr>
-            <td>
+            <td class = "cuadrado">
                 <img src="delgado.jpeg">
             </td>
-            <td>
+            <td class = "cuadrado">
                 <img src="pantera.jpg">
             </td>
         </tr>
         <tr>
-            <td>
+            <td class = "cuadrado">
                 <img src="delgado.jpeg">
             </td>
-            <td>
+            <td class = "cuadrado">
                 <img src="pantera.jpg">
             </td>
         </tr>
@@ -181,7 +188,11 @@
     <div id="tiempo"></div>
     <button onclick="location.reload(true);">Reiniciar</button>
     <hr>
-    <div id="records"></div>
+    <table id ="records">
+        <th>Nombre</th>
+        <th>Tiempo</th>
+        
+    </table>
 </body>
 
 </html>
