@@ -46,13 +46,12 @@
 		onload = escribirArray;
 
 		var parrafo;
-			var i;
-			var coche;
-			var cochesOrdenados;
-		
+		var i;
+		var coche;
+		var cochesOrdenados;
+	
 		function escribirArray(){
-			parrafo;
-			 			 coches = document.getElementById("coches");
+			coches = document.getElementById("coches");
 			for (i = 0; i < array.length; i++){
 				parrafo = document.createElement("P");
 				parrafo.innerHTML = "Marca: " + array[i].marca + ". Modelo: " + array[i].modelo +
@@ -66,13 +65,12 @@
 			for (i = 0; i < array.length; i++){
 				array[i].puesto = i;
 				comparar(i); 
-				console.log(array[i]);
-				escribirArrayOrdenado(i);
+				
 			}	
+			console.log(array);
 		}
 
 		function comparar(indice_recibido){
-		;
 			for (i = 0; i < indice_recibido; i++){
 				console.log("i: " + i, "indice_recibido: " + indice_recibido)
 				if (array[i].anio > array[indice_recibido].anio){
@@ -82,16 +80,6 @@
 			}		
 		}
 
-		function escribirArrayOrdenado(indice_recibido){
-			
-			
-			cohesOrdenados = document.getElementById("cochesOrdenados");
-			// TODO while para buscar 
-				if (array[i].puesto = 0){
-					cochesOrdenados.innerHTML = "Marca: " + array[i].marca + ". Modelo: " + array[i].modelo +
-									". Año: " + array[i].anio + ". Puertas: " + array[i].puertas +".";
-				}
-		}
 		
 	</script>
 
