@@ -12,6 +12,9 @@
             color: red;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/js/intlTelInput.js"></script>
+    <script src="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/js/utils.js"></script>
     <script>
         const VAL_MIN_LETRAS = /^\w{6,}$/;
         const VAL_EMAIL = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
@@ -27,13 +30,20 @@
         var tlf;
         var usuario_json;
 
+        onload = phone; // añadido
+
+        function phone(){ // añadido
+            $("#phone").intlTelInput();
+        }
+
 
         function validar (){
             nombre = document.getElementById("nombre").value;
             email = document.getElementById("email").value;
             pwd = document.getElementById("psw").value;
             conf_pwd = document.getElementById("conf_psw").value;
-            tlf = $("#phone").intlTelInput("getExtension");
+            tlf = $("#phone").intlTelInput("getNumber"); // añadido
+            console.log(tlf);
 
             error = "";
 
@@ -52,10 +62,10 @@
                 error = error + "La contraseñas no coinciden. "
             }
             console.log("tel: "+ tlf);
-/*          
+         
            if (!VAL_TLF.test(tlf)){
                 error = error + "El teléfono tiene un formato erroneo."
-            }*/
+           }
             
             if (error != ""){
                 document.getElementById("errores").innerHTML = error;
@@ -119,12 +129,6 @@
         <br>
         <label for="phone">Teléfono: </label>
         <input type="tel" id="phone">
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/js/intlTelInput.js"></script>
-        <script>
-            $("#phone").intlTelInput();
-        </script>
         <br>
         <p id ="errores" hidden="true" class="errores"></p>
         <button onclick="validar()">Enviar</button> <!--Enviar formulario-->
