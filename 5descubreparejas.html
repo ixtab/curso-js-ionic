@@ -1,5 +1,5 @@
-<html>
 
+<html>
 <head>
     <meta charset="UTF-8">
     <title>
@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="css/estilo2.css">
     <script src="https://albert-gonzalez.github.io/easytimer.js/dist/easytimer.min.js"></script>
     <script language="javascript">
+
+        // PREPARAR ORDENAR EN CLICK EN NOMBRE Y TIEMPO;
 
         window.onload = iniciarTablero;
         const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/SubirRecord";
@@ -114,24 +116,25 @@
             xmlHttp.send(record);
         }
 
-        function procesarEventosEnviar(){
+        function procesarEventosEnviar(opcion){
             console.log("Procesar eventos Invocado Enviar " + xmlHttp.readyState + ". Status " + xmlHttp.status);
             console.log(xmlHttp.getAllResponseHeaders());
             if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                 console.log ("ENVIADO!!!")
                 lista_recibida = xmlHttp.responseText;
                 console.log(lista_recibida);
-                escribirLista();
+                escribirLista(opcion); 
             } 
             else {
             }
         }
         
-        function escribirLista(){   
-            prepararLista();
+        function escribirLista(opcion){   // opcion 1 = ordenar por tiempo; opcion 2 = ordenar por nombre
+            prepararLista(opcion);
             var linea;
             var list = lista_recibida.ranking;
             var records = document.getElementById("records");
+            records.td = ""; // vacio la tabla por si se cambia el orden no se dupliquen entradas.
             var i;
             var celda;
             for ( i = 0; i < list.length; i++){
@@ -147,13 +150,18 @@
             }
         }
 
-        function prepararLista(){
+        function prepararLista(opcion){
             lista_recibida = JSON.parse(lista_recibida);
             console.log(lista_recibida);
-            lista_recibida.ranking.sort(ordenar);
+            if (opcion == 1){
+                lista_recibida.ranking.sort(ordenarPorTiempo);
+            }
+            else {
+                lista_recibida.ranking.sort(ordenarPorNombre);
+            }
         }
                 
-        function ordenar(a, b) {
+        function ordenarPorTiempo(a, b) {
             if (a.tiempo > b.tiempo) {
                 return 1;
             }
@@ -161,6 +169,16 @@
                 return -1;
             }     
             return 0;     
+        }
+
+        function ordenarPorNombre(a,b) {
+            if (a.nombre > b.nombre) {
+                return 1;
+            }
+            if (a.nombre < b.nombre) {
+                return -1;
+            }     
+            return 0; 
         }
 
     </script>
@@ -188,11 +206,13 @@
     <div id="tiempo"></div>
     <button onclick="location.reload(true);">Reiniciar</button>
     <hr>
-    <table id ="records">
-        <th>Nombre</th>
-        <th>Tiempo</th>
-        
+    <table id ="records">  
+        <th onclick="procesarEventosEnviar(2)">Nombre</th> <!-- paso 2 a la función para que ordene por nombre-->
+        <th onclick="procesarEventosEnviar(1)">Tiempo</th> <!-- paso 1 a la función para que ordene por tiempo-->  
     </table>
+
+
+
 </body>
 
 </html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formulario Registro</title>
+    <link rel="stylesheet" href="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/css/intlTelInput.css">
+    <style>
+        .errores{
+            font-size: 150%;
+            color: red;
+        }
+    </style>
+    <script>
+        const VAL_MIN_LETRAS = /^\w{6,}$/;
+        const VAL_EMAIL = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+        const VAL_PWD = /^\w{6,15}$/;
+        const VAL_TLF = /^\+\d{7,15}$/; 
+        var xmlHttp = new XMLHttpRequest();
+        const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/Login";
+        var error; 
+        var nombre;
+        var email;
+        var pwd;
+        var conf_pwd;
+        var tlf;
+        var usuario_json;
+
+
+        function validar (){
+            nombre = document.getElementById("nombre").value;
+            email = document.getElementById("email").value;
+            pwd = document.getElementById("psw").value;
+            conf_pwd = document.getElementById("conf_psw").value;
+            tlf = $("#phone").intlTelInput("getExtension");
+
+            error = "";
+
+            if (!VAL_MIN_LETRAS.test(nombre)){
+                error = "El nombre tiene que tener más de 6 caracteres sin espacios. "
+            }
+        
+            if (!VAL_EMAIL.test(email)){
+                error = error + "El e-mail no tirene un formato válido. "
+            }
+
+            if (!VAL_PWD.test(pwd)){
+                error = error + "La contraseña tiene que tener entre 6 y 15 caracteres. "
+            }
+            if (pwd != conf_pwd){
+                error = error + "La contraseñas no coinciden. "
+            }
+            console.log("tel: "+ tlf);
+/*          
+           if (!VAL_TLF.test(tlf)){
+                error = error + "El teléfono tiene un formato erroneo."
+            }*/
+            
+            if (error != ""){
+                document.getElementById("errores").innerHTML = error;
+                document.getElementById("errores").hidden = false;
+            }
+
+            else {
+                usuario_json = {
+                    nombre:nombre,
+                    email:email,
+                    pwd:pwd,
+                    telefono:tlf 
+                };
+                usuario_json = JSON.stringify(usuario_json);
+                enviar();
+            }
+
+        }
+
+        function enviar(){
+            document.getElementById("errores").hidden = true;
+            console.log ("Enviando...");
+            xmlHttp.onreadystatechange = procesarEventos;
+            xmlHttp.open('POST', DIR_SERV,true);
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.send(usuario_json);
+        }
+
+        function procesarEventos(){
+            console.log("Procesar eventos Invocado " + xmlHttp.readyState);
+            if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                location.href = "14_envio_confirmado.html";
+            } 
+            else {
+                document.getElementById("errores").hidden = false;
+                document.getElementById("errores").innerHTML = "Error de Conexión";
+            }
+        }
+
+        function limpiar(){
+            document.getElementById("nombre").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("psw").value = "";
+            document.getElementById("conf_psw").value = "";
+        }
+
+    </script>
+</head>
+<body>
+        <label for="nombre">Nombre: </label>
+        <input type="text" id="nombre"> <!--Nombre, mínimo 6 letras-->
+        <br>
+        <label for="email">E-mail: </label>
+        <input type="text" id="email"> <!--Email-->
+        <br>
+        <label for="pwd">Contraseña: </label>
+        <input type="password" id="psw"> <!--minimo 6-->
+        <br>
+        <label for="conf_pwd">Confirmar contraseña: </label>
+        <input type="password"id="conf_psw"> <!--confirmar contraseña-->
+        <br>
+        <label for="phone">Teléfono: </label>
+        <input type="tel" id="phone">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/js/intlTelInput.js"></script>
+        <script>
+            $("#phone").intlTelInput();
+        </script>
+        <br>
+        <p id ="errores" hidden="true" class="errores"></p>
+        <button onclick="validar()">Enviar</button> <!--Enviar formulario-->
+        <button onclick="limpiar()">Limpiar</button> <!--limpiar-->
+</body>
+</html>
