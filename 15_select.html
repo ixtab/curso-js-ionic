@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ejercicio con select</title>
+
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+       
+        var servidor = "http://10.1.2.10:8080/appwebprofe/CargaMenuSelect";
+        var lista;
+        var opcion_lista = 0;
+      
+        onload =  getLista; 
+
+        function procesarEventos(){
+            console.log("Procesar eventos " + xmlHttp.readyState + ". Status " + xmlHttp.status);
+            if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                lista = xmlHttp.responseText;
+                console.log(lista); 
+                if (opcion_lista == 0){
+                    crearSelectDepartamento();
+                }
+                else {
+                    crearSelectTrabajadores();
+                }
+
+            } 
+            else {
+                console.log("ERROR");
+            
+            }
+        }
+        
+        function getLista() {
+            xmlHttp.onreadystatechange = procesarEventos;
+            xmlHttp.open('GET', servidor, true); 
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.send(null);
+            
+        }
+
+        function crearSelectDepartamento(){
+           
+            var departamento = document.getElementById("departamento");
+            var i;
+            lista = JSON.parse(lista);
+            for (i=0; i< lista.length; i++){
+                opcion = document.createElement("OPTION");
+                opcion.innerHTML = lista[i].nombre;
+                opcion.value = lista[i].numero;
+                document.getElementById("departamento").appendChild(opcion);
+            }
+            listaTrabajadores();
+
+        }
+
+        function listaTrabajadores(){
+            
+            servidor = "http://10.1.2.10:8080/appwebprofe/CargarTrabajadores?dpto=" + document.getElementById("departamento").value;
+            opcion_lista = 1;
+            document.getElementById("trabajadores").innerHTML = "";
+            getLista();
+            
+        }
+        
+        function crearSelectTrabajadores(){
+            var trabajadores = document.getElementById("trabajadores");
+
+            lista = JSON.parse(lista);
+            var i;
+            for (i=0; i< lista.length; i++){
+                opcion = document.createElement("OPTION");
+                opcion.innerHTML = lista[i].nombre;
+                trabajadores.appendChild(opcion);
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <label for="departamento">Departamento:</label>
+    <select id="departamento" onchange="listaTrabajadores()"></select>
+    <br>
+    <label for="trabajadores">Trabajadores: </label>
+    <select id="trabajadores"></select>
+</body>
+</html>

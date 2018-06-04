@@ -2,14 +2,11 @@ xmlHttp = new XMLHttpRequest();
 
 function procesarEventosRecibir(){
     if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-    lista = xmlHttp.responseText; 
-    lista = JSON.parse(lista);
-    lista = lista.results;
-    console.log(lista);
-    imprimirLista();
+    recibido = xmlHttp.responseText; 
+    
     } 
     else {
-        lista = "ERROR";
+        recibido = "ERROR";
     } 
 }
 
@@ -26,16 +23,16 @@ function procesarEventosEnviar(){
 }
 
 function obtener(){
-
     xmlHttp.onreadystatechange = procesarEventosRecibir;
-    xmlHttp.open('GET', url, true); 
+    xmlHttp.open('GET', DIR_SERV_REC, true); 
     xmlHttp.setRequestHeader('Content-Type', 'application/json');
     xmlHttp.send(null);
 }
 
 function enviar(){
-    busqueda = document.getElementById("caja").value;
-    url = "https://itunes.apple.com/search?term=" + busqueda + "&media=music&limit=20";
-    console.log(url);
+    xmlHttp.onreadystatechange = procesarEventos;
+    xmlHttp.open('POST', DIR_SERV_ENV,true);
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+    xmlHttp.send(json);
     
 }
