@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Formulario Registro</title>
-    <link rel="stylesheet" href="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/css/intlTelInput.css">
+    <link rel="stylesheet" href="intl-tel-input-12.1.0/build/css/intlTelInput.css">
     <style>
         .errores{
             font-size: 150%;
@@ -13,8 +13,8 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/js/intlTelInput.js"></script>
-    <script src="file:///Users/Dev1/Documents/intl-tel-input-12.1.0/build/js/utils.js"></script>
+    <script src="intl-tel-input-12.1.0/build/js/intlTelInput.js"></script>
+    <script src="intl-tel-input-12.1.0/build/js/utils.js"></script>
     <script>
         const VAL_MIN_LETRAS = /^\w{6,}$/;
         const VAL_EMAIL = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
@@ -30,9 +30,9 @@
         var tlf;
         var usuario_json;
 
-        onload = phone; // añadido
+        onload = phone; // 
 
-        function phone(){ // añadido
+        function phone(){ // para que ponga banderas con código telefónico del país en la caja del teléfono; https://github.com/jackocnr/intl-tel-input
             $("#phone").intlTelInput();
         }
 
@@ -42,7 +42,7 @@
             email = document.getElementById("email").value;
             pwd = document.getElementById("psw").value;
             conf_pwd = document.getElementById("conf_psw").value;
-            tlf = $("#phone").intlTelInput("getNumber"); // añadido
+            tlf = $("#phone").intlTelInput("getNumber"); // https://github.com/jackocnr/intl-tel-input
             console.log(tlf);
 
             error = "";
