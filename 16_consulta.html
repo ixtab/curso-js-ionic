@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Consulta Marcador</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            
+        }
+        .contenedor{
+            width:250px;
+        }
+        .resultado{
+            display: flex;
+            flex-direction: row;
+            background-color: darkgreen;
+            width: 250px;
+        }
+        .resultado > div {
+            background-color: #f1f1f1;
+            width: 115px;
+            margin: 10px;
+            text-align: center;
+            line-height: 75px;
+            font-size: 30px;
+        }
+        td, th {
+            border-bottom: 1px solid black;
+        }
+        .juntos{
+            display: block;
+            flex-direction: row;
+        }
+        #hora{
+            width: 172px;
+        }    
+    </style>
+
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+        const SERVIDOR = "http://10.1.2.10:8080/Marcador/ActualizarInfoPartido";
+        var resultado;
+
+        onload = getResultado;
+
+        function procesarEventos(){
+            console.log("Procesar eventos " + xmlHttp.readyState + ". Status " + xmlHttp.status);
+            if  (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                resultado = JSON.parse(xmlHttp.responseText);
+                prepararPagina();
+
+            } 
+            else {
+                console.log("ERROR");
+            
+            }
+        }
+
+        function prepararPagina(){
+            document.getElementById("comentarios").innerHTML = ""; // Dejo la tabla vacia para que no se añadan celdas a cada actualización;
+            escribirtPagina();
+            establecerIntervalo();
+        }
+
+        function getResultado() {
+            xmlHttp.onreadystatechange = procesarEventos;
+            xmlHttp.open('GET', SERVIDOR, true); 
+            xmlHttp.setRequestHeader('Content-Type', 'application/json');
+            xmlHttp.send(null);
+            
+        }
+        
+        function establecerIntervalo(){
+            intervalo = setInterval(getResultado, 5000);
+        }
+
+        function escribirtPagina(){
+            var comentarios = resultado.listacomentarios;
+            var cab;
+            var fila;
+            var celda;
+
+            document.getElementById("goles_local").innerHTML = resultado.marcador.goles_local;
+            document.getElementById("goles_visitante").innerHTML =  resultado.marcador.goles_visitante;
+            document.getElementById("foto").src = "http://10.1.2.10:8080/Marcador/" + resultado.fotopartido;
+
+            cab = document.createElement("TH");   
+            cab.innerHTML = "Minuto";
+            document.getElementById("comentarios").appendChild(cab);
+
+            cab = document.createElement("TH");       
+            cab.innerHTML = "Comentario";
+            document.getElementById("comentarios").appendChild(cab);
+            
+            for (var i = 0; i < comentarios.length; i++ ){
+
+                fila = document.createElement("TR");
+                fila.id = "fila" + i;
+                document.getElementById("comentarios").appendChild(fila);
+
+                celda = document.createElement("TD");
+                celda.innerHTML = comentarios[i].minuto;
+                document.getElementById("fila"+i).appendChild(celda);
+
+                celda = document.createElement("TD");
+                celda.innerHTML = comentarios[i].comentario;
+                document.getElementById("fila"+i).appendChild(celda);
+            } 
+
+
+            var h = new Date();
+            var hora = h.getHours()
+            var minutos = h.getMinutes();
+            var segundos = h.getSeconds();
+            if (minutos < 10){
+                minutos = "0" + minutos;
+            }
+            if (segundos < 10){
+                segundos = "0" + segundos;
+            }
+
+            document.getElementById("hora").innerHTML = "Actualizado a las " + hora + ":" + minutos + ":" + segundos;
+            
+        }
+
+    </script>
+
+</head>
+<body>
+    <div class="contenedor">
+        <div class ="resultado">
+            <div class="caja"><h1 id="goles_local"></h1></div> 
+            <div class ="caja"><h1 id="goles_visitante"></h1></div>
+        </div>
+        <br>
+        <img src="" alt="" id ="foto" width="250px;">
+        <table id="comentarios">
+        </table>
+        <div class="juntos">
+            <div>
+                <p id= "hora"></p>
+            </div>
+            <div>
+                <img src="imagenes/actualizar.jpeg" height="30px" width = "30px" alt="actualizar" onclick="getResultado()"> 
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

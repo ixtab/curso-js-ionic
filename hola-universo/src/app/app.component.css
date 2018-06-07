@@ -1,0 +1,10 @@
+h1 {
+    color: darkred;
+    font-size: 300%;
+    text-shadow: 0 0 40px black;
+}
+
+img {
+    box-shadow: 0 0 40px black;
+    border-radius: 10%;
+}
