@@ -1,3 +1,4 @@
+"use strict";
 var xmlHttp;
 var url; 
 var lista;
@@ -62,8 +63,7 @@ function imprimirLista() {
     document.getElementById("gif").hidden = true;
     
     var cancion;
-    var array_fila = new Array()
-;
+    array_fila = new Array();
     var array_campos = ["Título", "Artista","Imagen","Preview", "Precio", "Seleccionar"];
 
     if (lista.length > 0){
